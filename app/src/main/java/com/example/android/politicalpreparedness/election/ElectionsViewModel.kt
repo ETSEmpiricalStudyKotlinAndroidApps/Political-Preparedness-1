@@ -1,10 +1,12 @@
 package com.example.android.politicalpreparedness.election
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.android.politicalpreparedness.database.ElectionDao
 
 //TODO: Construct ViewModel and provide election datasource
 class ElectionsViewModel(private val dataSource: ElectionDao): ViewModel() {
+
 
 
     //TODO: Create live data val for upcoming elections

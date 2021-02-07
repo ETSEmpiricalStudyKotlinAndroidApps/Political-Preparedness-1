@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.example.android.politicalpreparedness.R
+import com.example.android.politicalpreparedness.application.MyApplication
 import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
 
 class ElectionsFragment : Fragment() {
