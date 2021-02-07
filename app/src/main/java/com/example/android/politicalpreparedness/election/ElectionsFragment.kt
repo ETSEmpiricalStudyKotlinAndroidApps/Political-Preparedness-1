@@ -15,7 +15,7 @@ class ElectionsFragment : Fragment() {
 
     private lateinit var binding: FragmentElectionBinding
 
-    //TODO: Declare ViewModel
+    //TODO: Declare ViewMode
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
