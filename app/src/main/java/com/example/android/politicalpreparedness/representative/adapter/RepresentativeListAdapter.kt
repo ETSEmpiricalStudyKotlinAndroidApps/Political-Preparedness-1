@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
+import com.example.android.politicalpreparedness.databinding.ViewHolderRepresentativesBinding
 import com.example.android.politicalpreparedness.network.models.Channel
 import com.example.android.politicalpreparedness.representative.model.Representative
 
@@ -27,10 +28,10 @@ class RepresentativeListAdapter(private val representative: Representative, priv
     }
 }
 
-class RepresentativeViewHolder(val binding: FragmentRepresentativeBinding): RecyclerView.ViewHolder(binding.root) {
+class RepresentativeViewHolder(val binding: ViewHolderRepresentativesBinding): RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(item: Representative) {
-        binding.representative = item
+    fun bind(representative: Representative) {
+        binding.representative = representative
        // binding.representativePhoto.setImageResource(R.drawable.ic_profile)
 
         //TODO: Show social links ** Hint: Use provided helper methods
@@ -42,13 +43,10 @@ class RepresentativeViewHolder(val binding: FragmentRepresentativeBinding): Recy
     companion object {
         fun from(parent: ViewGroup): RepresentativeViewHolder {
             val layoutInflater: LayoutInflater = LayoutInflater.from(parent.context)
-            val binding = FragmentRepresentativeBinding.inflate(layoutInflater, parent, false)
-            //TODO change layout for a viewholder layout(create a layout to display representative)
+            val binding = ViewHolderRepresentativesBinding.inflate(layoutInflater, parent, false)
             return RepresentativeViewHolder(binding)
         }
     }
-
-    //TODO: Add companion object to inflate ViewHolder (from)
 
    /* private fun showSocialLinks(channels: List<Channel>) {
         val facebookUrl = getFacebookUrl(channels)
@@ -99,7 +97,6 @@ class RepresentativeDiffCallback: DiffUtil.ItemCallback<Representative>() {
 
 }
 
-//TODO: Create RepresentativeListener
 class RepresentativeListener(private val clickListener: (representative: Representative) -> Unit) {
     fun onClick(representative: Representative) = clickListener(representative)
 }

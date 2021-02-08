@@ -6,10 +6,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
+import com.example.android.politicalpreparedness.databinding.ViewHolderElectionBinding
 import com.example.android.politicalpreparedness.election.ElectionsViewModel
 import com.example.android.politicalpreparedness.network.models.Election
 
-class ElectionListAdapter(private val viewModel: ElectionsViewModel, private val clickListener: ElectionListener): ListAdapter<Election, ElectionViewHolder>(ElectionDiffCallback()) {
+class ElectionListAdapter(private val clickListener: ElectionListener): ListAdapter<Election, ElectionViewHolder>(ElectionDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ElectionViewHolder {
         return ElectionViewHolder.from(parent)
@@ -18,17 +19,16 @@ class ElectionListAdapter(private val viewModel: ElectionsViewModel, private val
     override fun onBindViewHolder(holder: ElectionViewHolder, position: Int) {
        val election = getItem(position)
 
-        holder.bind(viewModel, election)
+        holder.bind(election)
         holder.itemView.setOnClickListener {
             clickListener.onClick(election)
         }
     }
 }
 
-class ElectionViewHolder private constructor(private val binding: FragmentElectionBinding): RecyclerView.ViewHolder(binding.root) {
+class ElectionViewHolder private constructor(private val binding: ViewHolderElectionBinding): RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(viewModel: ElectionsViewModel, election: Election) {
-        binding.viewModel = viewModel
+    fun bind(election: Election) {
         binding.election = election
         binding.executePendingBindings()
     }
@@ -37,7 +37,7 @@ class ElectionViewHolder private constructor(private val binding: FragmentElecti
     companion object {
         fun from(parent: ViewGroup): ElectionViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
-            val binding = FragmentElectionBinding.inflate(layoutInflater, parent, false)
+            val binding = ViewHolderElectionBinding.inflate(layoutInflater, parent, false)
 
             return ElectionViewHolder(binding)
         }

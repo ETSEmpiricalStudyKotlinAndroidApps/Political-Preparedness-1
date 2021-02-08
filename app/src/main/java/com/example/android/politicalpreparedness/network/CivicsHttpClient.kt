@@ -6,14 +6,14 @@ class CivicsHttpClient: OkHttpClient() {
 
     companion object {
 
-        const val API_KEY = "" //TODO: Place your API Key Here
+        const val API_KEY = "AIzaSyBAYMimuYHzJPfD5YJYGGdtTBYmNazbBvk"
 
         fun getClient(): OkHttpClient {
             return Builder()
                     .addInterceptor { chain ->
                         val original = chain.request()
                         val url = original
-                                .url()
+                                .url
                                 .newBuilder()
                                 .addQueryParameter("key", API_KEY)
                                 .build()
