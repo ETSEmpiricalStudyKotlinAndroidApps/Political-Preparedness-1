@@ -50,7 +50,7 @@ class ElectionsFragment : Fragment() {
             }
         })
 
-        electionsViewModel.navigate.observe(viewLifecycleOwner, Observer { election ->
+        electionsViewModel.navigate.observe(viewLifecycleOwner, Observer {election ->
             if(election != null) {
                 this.findNavController().navigate(ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(election.id, election.division))
                 electionsViewModel.doneNavigating()
