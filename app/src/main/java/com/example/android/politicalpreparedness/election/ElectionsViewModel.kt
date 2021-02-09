@@ -1,14 +1,12 @@
 package com.example.android.politicalpreparedness.election
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.android.politicalpreparedness.database.ElectionDao
 import com.example.android.politicalpreparedness.network.CivicsApi
 import com.example.android.politicalpreparedness.network.CivicsHttpClient
 import com.example.android.politicalpreparedness.network.models.Election
 import com.example.android.politicalpreparedness.network.models.ElectionResponse
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.lang.Exception
@@ -27,7 +25,14 @@ class ElectionsViewModel(private val dataSource: ElectionDao): ViewModel() {
     val dataLoading: LiveData<Boolean>
         get() = _dataLoading
 
-    //TODO: Create val and functions to populate live data for upcoming elections from the API and saved elections from local database
+
+    private val _dataLoadingSaved = MutableLiveData<Boolean>()
+    val dataLoadingSaved: LiveData<Boolean>
+        get() = _dataLoadingSaved
+
+    private val _navigate = MutableLiveData<Election>()
+    val navigate: LiveData<Election>
+        get() = _navigate
 
     private fun retrieveElections() {
         _dataLoading.value = true
@@ -50,11 +55,32 @@ class ElectionsViewModel(private val dataSource: ElectionDao): ViewModel() {
         }
     }
 
-    init {
-        _dataLoading.value = false
-        retrieveElections()
+    private fun retrieveSavedElections() {
+        _dataLoadingSaved.value = true
+
+        val savedList = dataSource.getSavedElections().asLiveData()
+
+        if(!savedList.value.isNullOrEmpty()) {
+            _savedElections.value = savedList.value
+            _dataLoadingSaved.value = false
+        } else {
+            _savedElections.value = emptyList()
+            _dataLoadingSaved.value = false
+        }
     }
 
-    //TODO: Create functions to navigate to saved or upcoming election voter info
+    init {
+        _dataLoading.value = false
+        _dataLoadingSaved.value = false
+        retrieveElections()
+        retrieveSavedElections()
+    }
 
+    fun navigate(election: Election) {
+        _navigate.value = election
+    }
+
+    fun doneNavigating() {
+        _navigate.value = null
+    }
 }

@@ -11,7 +11,7 @@ interface ElectionDao {
     fun insert(election: Election)
 
     @Query("SELECT * FROM election_table")
-    fun getAllElections(): Flow<List<Election>>
+    fun getSavedElections(): Flow<List<Election>>
 
     @Query("SELECT * FROM election_table WHERE id= :electionId")
     suspend fun getElectionById(electionId: Int): Election

@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.application.MyApplication
 import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
@@ -30,44 +33,57 @@ class ElectionsFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_election, container, false)
         binding.viewModel = electionsViewModel
         binding.lifecycleOwner = this
-        //TODO: Add ViewModel values and create ViewModel
-
-        //TODO: Add binding values
-
-        //TODO: Link elections to voter info
 
         electionsViewModel.dataLoading.observe(viewLifecycleOwner, Observer { isLoading ->
-            if(isLoading) {
-                hideRecyclerShowLoading()
+            if (isLoading) {
+                hideRecyclerShowLoading(binding.recyclerUpcomingElections, binding.progressUpcomingElections)
             } else {
-                hideLoadingShowRecycler()
+                hideLoadingShowRecycler(binding.recyclerUpcomingElections, binding.progressUpcomingElections)
             }
         })
 
+        electionsViewModel.dataLoadingSaved.observe(viewLifecycleOwner, Observer { isLoading ->
+            if (isLoading) {
+                hideRecyclerShowLoading(binding.recyclerSavedElections, binding.progressSavedElections)
+            } else {
+                hideLoadingShowRecycler(binding.recyclerSavedElections, binding.progressSavedElections)
+            }
+        })
+
+        electionsViewModel.navigate.observe(viewLifecycleOwner, Observer { election ->
+            if(election != null) {
+                this.findNavController().navigate(ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(election.id, election.division))
+                electionsViewModel.doneNavigating()
+            }
+        })
 
         setRecyclerAdapter()
 
         return binding.root
     }
 
-    private fun hideLoadingShowRecycler() {
-        binding.recyclerUpcomingElections.visibility = View.VISIBLE
-        binding.progressUpcomingEvents.visibility = View.GONE
+    private fun hideLoadingShowRecycler(recyclerView: RecyclerView, progressBar: ProgressBar) {
+        recyclerView.visibility = View.VISIBLE
+        progressBar.visibility = View.GONE
     }
 
-    private fun hideRecyclerShowLoading() {
-        binding.recyclerUpcomingElections.visibility = View.GONE
-        binding.progressUpcomingEvents.visibility = View.VISIBLE
+    private fun hideRecyclerShowLoading(recyclerView: RecyclerView, progressBar: ProgressBar) {
+        recyclerView.visibility = View.GONE
+        progressBar.visibility = View.VISIBLE
     }
 
     private fun setRecyclerAdapter() {
-            binding.recyclerUpcomingElections.apply {
-                this.adapter = ElectionListAdapter(ElectionListener {
-                    Toast.makeText(requireActivity(), "Test", Toast.LENGTH_SHORT).show()
-                })
+        binding.recyclerUpcomingElections.apply {
+            this.adapter = ElectionListAdapter(ElectionListener {
+                electionsViewModel.navigate(it)
+            })
+        }
+
+        binding.recyclerSavedElections.apply {
+            this.adapter = ElectionListAdapter(ElectionListener {
+                electionsViewModel.navigate(it)
+            })
         }
     }
-
-    //TODO: Refresh adapters when fragment loads
 
 }

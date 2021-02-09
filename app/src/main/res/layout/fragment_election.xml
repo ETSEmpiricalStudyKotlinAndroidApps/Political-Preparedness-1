@@ -16,7 +16,6 @@
         android:layout_height="match_parent"
         tools:context="com.example.android.politicalpreparedness.MainActivity">
 
-        <!-- TODO: Add Upcoming Election Recycler and Header -->
         <TextView
             android:id="@+id/tv_upcoming_elections"
             style="@style/HeaderText"
@@ -32,12 +31,10 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <FrameLayout
+            android:id="@+id/frameLayout"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="@dimen/margin_8"
-            android:layout_marginTop="@dimen/margin_8"
-            android:layout_marginEnd="@dimen/margin_8"
-            android:layout_marginBottom="@dimen/margin_16"
+            android:layout_margin="@dimen/margin_8"
             app:layout_constraintBottom_toTopOf="@+id/tv_saved_elections"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -46,18 +43,17 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_upcoming_elections"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="16dp"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:elections="@{viewModel.upcomingElections}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             <ProgressBar
-                android:id="@+id/progress_upcoming_events"
+                android:id="@+id/progress_upcoming_elections"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
         </FrameLayout>
 
@@ -74,16 +70,37 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_upcoming_elections" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_saved_elections"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_16"
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/margin_8"
             android:layout_marginTop="@dimen/margin_8"
-            android:layout_marginEnd="@dimen/margin_16"
+            android:layout_marginEnd="@dimen/margin_8"
+            android:layout_marginBottom="@dimen/margin_16"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_saved_elections" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_saved_elections">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_saved_elections"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:orientation="vertical"
+                app:elections="@{viewModel.savedElections}"
+                app:layout_constraintTop_toBottomOf="@+id/tv_saved_elections" />
+
+            <ProgressBar
+                android:id="@+id/progress_saved_elections"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+
+        </FrameLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
