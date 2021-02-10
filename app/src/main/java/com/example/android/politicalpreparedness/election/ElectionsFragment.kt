@@ -23,7 +23,7 @@ class ElectionsFragment : Fragment() {
 
     private lateinit var binding: FragmentElectionBinding
 
-    private val electionsViewModel: ElectionsViewModel by viewModels() {
+    private val electionsViewModel: ElectionsViewModel by viewModels {
         ElectionsViewModelFactory((requireContext().applicationContext as MyApplication).getDataSource())
     }
 

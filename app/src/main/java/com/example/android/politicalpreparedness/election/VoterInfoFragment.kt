@@ -4,17 +4,34 @@ import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.example.android.politicalpreparedness.R
+import com.example.android.politicalpreparedness.application.MyApplication
 import com.example.android.politicalpreparedness.databinding.FragmentVoterInfoBinding
+import com.example.android.politicalpreparedness.network.models.VoterInfoResponse
 
 class VoterInfoFragment : Fragment() {
 
     private lateinit var binding: FragmentVoterInfoBinding
 
+    private val args: VoterInfoFragmentArgs by navArgs()
+
+    private val voterInfoViewModel: VoterInfoViewModel by viewModels {
+        VoterInfoViewModelFactory((requireContext().applicationContext as MyApplication).getDataSource())
+    }
+
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_voter_info, container, false)
+
+        val electionId = args.argElectionId
+        voterInfoViewModel.retrieveVoterInfoResponse(electionId)
+
+        binding.viewModel = voterInfoViewModel
+        binding.lifecycleOwner = this
+
 
         //TODO: Add ViewModel values and create ViewModel
 

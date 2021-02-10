@@ -56,6 +56,7 @@ interface CivicsApiService {
 
     @GET("voterinfo")
     suspend fun getVoterInfo(
+            @Query("key") key: String,
             @Query("address") address: String,
             @Query("electionId") electionId: Int
     ): VoterInfoResponse
