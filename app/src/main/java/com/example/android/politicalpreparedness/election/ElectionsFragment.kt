@@ -34,7 +34,9 @@ class ElectionsFragment : Fragment() {
         binding.viewModel = electionsViewModel
         binding.lifecycleOwner = this
 
-        electionsViewModel.dataLoading.observe(viewLifecycleOwner, Observer { isLoading ->
+
+        //Handles Data Loading
+        electionsViewModel.dataLoading.observe(viewLifecycleOwner, { isLoading ->
             if (isLoading) {
                 hideRecyclerShowLoading(binding.recyclerUpcomingElections, binding.progressUpcomingElections)
             } else {
@@ -42,15 +44,8 @@ class ElectionsFragment : Fragment() {
             }
         })
 
-        electionsViewModel.dataLoadingSaved.observe(viewLifecycleOwner, Observer { isLoading ->
-            if (isLoading) {
-                hideRecyclerShowLoading(binding.recyclerSavedElections, binding.progressSavedElections)
-            } else {
-                hideLoadingShowRecycler(binding.recyclerSavedElections, binding.progressSavedElections)
-            }
-        })
-
-        electionsViewModel.navigate.observe(viewLifecycleOwner, Observer {election ->
+        // Handles navigation
+        electionsViewModel.navigate.observe(viewLifecycleOwner, { election ->
             if(election != null) {
                 this.findNavController().navigate(ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(election.id, election.division))
                 electionsViewModel.doneNavigating()
@@ -72,6 +67,9 @@ class ElectionsFragment : Fragment() {
         progressBar.visibility = View.VISIBLE
     }
 
+    /**
+     * Sets Adapter for both recycler views
+     */
     private fun setRecyclerAdapter() {
         binding.recyclerUpcomingElections.apply {
             this.adapter = ElectionListAdapter(ElectionListener {

@@ -1,34 +1,42 @@
 package com.example.android.politicalpreparedness.representative
 
-import android.content.Context
+import android.Manifest
 import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
 import android.view.*
-import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import android.widget.Spinner
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.example.android.politicalpreparedness.R
-import com.example.android.politicalpreparedness.databinding.FragmentDetailBinding
+import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
 import com.example.android.politicalpreparedness.network.models.Address
 import java.util.Locale
 
-class DetailFragment : Fragment() {
+class RepresentativeFragment : Fragment() {
 
-    private lateinit var binding: FragmentDetailBinding
+    private lateinit var binding: FragmentRepresentativeBinding
+
+    private val permissionList = arrayListOf(Manifest.permission.ACCESS_FINE_LOCATION)
 
     companion object {
-        //TODO: Add Constant for Location request
+        private const val LOCATION_REQUEST_ID = 0
     }
 
-    //TODO: Declare ViewModel
+    private val representativeViewModel: RepresentativeViewModel by viewModels()
+
+    private lateinit var addressLine1: EditText
+    private lateinit var addressLine2: EditText
+    private lateinit var city: EditText
+    private lateinit var zip: EditText
+    private lateinit var state: Spinner
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false)
-
-        //TODO: Establish bindings
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_representative, container, false)
 
         //TODO: Define and assign Representative adapter
 

@@ -1,12 +1,39 @@
 package com.example.android.politicalpreparedness.representative
 
+import androidx.databinding.ObservableField
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.android.politicalpreparedness.network.CivicsApi
+import com.example.android.politicalpreparedness.network.models.Address
+import com.example.android.politicalpreparedness.representative.model.Representative
+import kotlinx.coroutines.launch
 
-class RepresentativeViewModel: ViewModel() {
+class RepresentativeViewModel : ViewModel() {
 
-    //TODO: Establish live data for representatives and address
+    val addressLine1: ObservableField<String> = ObservableField("")
+    val addressLine2: ObservableField<String> = ObservableField("")
+    val city: ObservableField<String> = ObservableField("")
+    val state: ObservableField<String> = ObservableField("")
+    val zip: ObservableField<String> = ObservableField("")
+
+
+    private val _representatives = MutableLiveData<List<Representative>>()
+    val representatives: LiveData<List<Representative>>
+        get() = _representatives
+
+    private val _address = MutableLiveData<String>()
+    val address: LiveData<String>
+        get() = _address
 
     //TODO: Create function to fetch representatives from API from a provided address
+    fun fetchRepresentatives(address: String) {
+        viewModelScope.launch {
+                val (offices, officials) = CivicsApi.retrofitService.getRepresentatives(address)
+                _representatives.value = offices.flatMap { it.getRepresentatives(officials) }
+        }
+    }
 
     /**
      *  The following code will prove helpful in constructing a representative from the API. This code combines the two nodes of the RepresentativeResponse into a single official :
@@ -22,5 +49,6 @@ class RepresentativeViewModel: ViewModel() {
     //TODO: Create function get address from geo location
 
     //TODO: Create function to get address from individual fields
-
 }
+
+

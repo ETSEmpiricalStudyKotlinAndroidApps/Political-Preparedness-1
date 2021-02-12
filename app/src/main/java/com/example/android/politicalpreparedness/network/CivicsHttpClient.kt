@@ -1,12 +1,15 @@
 package com.example.android.politicalpreparedness.network
 
+import com.example.android.politicalpreparedness.BuildConfig
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import java.util.concurrent.TimeUnit
 
 class CivicsHttpClient: OkHttpClient() {
 
     companion object {
 
-        const val API_KEY = "AIzaSyBAYMimuYHzJPfD5YJYGGdtTBYmNazbBvk"
+        const val API_KEY = BuildConfig.ApiKey
 
         fun getClient(): OkHttpClient {
             return Builder()
@@ -23,6 +26,11 @@ class CivicsHttpClient: OkHttpClient() {
                                 .build()
                         chain.proceed(request)
                     }
+                    .addInterceptor(HttpLoggingInterceptor().apply {
+                        level = HttpLoggingInterceptor.Level.BODY
+                    })
+                    .connectTimeout(5, TimeUnit.SECONDS)
+                    .readTimeout(20, TimeUnit.SECONDS)
                     .build()
         }
 

@@ -70,38 +70,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_upcoming_elections" />
 
-        <FrameLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_saved_elections"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginStart="@dimen/margin_8"
-            android:layout_marginTop="@dimen/margin_8"
-            android:layout_marginEnd="@dimen/margin_8"
-            android:layout_marginBottom="@dimen/margin_16"
+            android:layout_margin="@dimen/margin_8"
+            android:orientation="vertical"
+            app:elections="@{viewModel.savedElections}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_saved_elections">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_saved_elections"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:orientation="vertical"
-                app:elections="@{viewModel.savedElections}"
-                app:layout_constraintTop_toBottomOf="@+id/tv_saved_elections" />
-
-            <ProgressBar
-                android:id="@+id/progress_saved_elections"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:visibility="gone" />
-
-        </FrameLayout>
-
+            app:layout_constraintTop_toBottomOf="@+id/tv_saved_elections" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

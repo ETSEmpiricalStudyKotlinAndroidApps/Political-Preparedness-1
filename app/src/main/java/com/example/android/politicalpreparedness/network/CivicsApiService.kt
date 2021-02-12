@@ -16,21 +16,6 @@ import java.util.concurrent.TimeUnit
 
 private const val BASE_URL = "https://www.googleapis.com/civicinfo/v2/"
 
-private val logging: HttpLoggingInterceptor = run {
-    val httpLoggingInterceptor = HttpLoggingInterceptor()
-    httpLoggingInterceptor.apply {
-        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-    }
-}
-
-private val httpClient = OkHttpClient.Builder()
-        .addInterceptor(logging)
-        .connectTimeout(5, TimeUnit.SECONDS)
-        .readTimeout(20, TimeUnit.SECONDS)
-        .build()
-
-
-// TODO: Add adapters for Java Date and custom adapter ElectionAdapter (included in project)
 private val moshi = Moshi.Builder()
         .add(ElectionAdapter())
         .add(DateAdapter())
@@ -42,7 +27,6 @@ private val retrofit = Retrofit.Builder()
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .baseUrl(BASE_URL)
         .client(CivicsHttpClient.getClient())
-        .client(httpClient)
         .build()
 
 /**
@@ -52,11 +36,10 @@ private val retrofit = Retrofit.Builder()
 interface CivicsApiService {
 
     @GET("elections")
-    suspend fun getAllElections(@Query("key") key: String): ElectionResponse
+    suspend fun getAllElections(): ElectionResponse
 
     @GET("voterinfo")
     suspend fun getVoterInfo(
-            @Query("key") key: String,
             @Query("address") address: String,
             @Query("electionId") electionId: Int
     ): VoterInfoResponse

@@ -8,4 +8,19 @@
     <string name="voting_locations">Voting Locations</string>
     <string name="ballot_information">Ballot Information</string>
     <string name="election_information">Election Information</string>
+    <string name="correspondence">Correspondence</string>
+    <string name="follow_election">Follow Election</string>
+    <string name="unfollow_election">Unfollow Election</string>
+    <string name="address_line_1">Address Line 1</string>
+    <string name="address_line_2">Address Line 2</string>
+    <string name="city">City</string>
+    <string name="zip">Zip</string>
+    <string name="use_my_location">Use my location</string>
+    <string name="my_representatives">My Representatives</string>
+    <string name="representative_search">Representative Search</string>
+    <string name="state">State</string>
+    <string name="representative_picture">Representative Picture</string>
+    <string name="website_icon">Website Icon</string>
+    <string name="twitter_representative_page">Twitter Representative page</string>
+    <string name="facebook_representative_page">Facebook Representative page</string>
 </resources>
