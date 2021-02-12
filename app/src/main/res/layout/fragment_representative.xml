@@ -83,7 +83,6 @@
             android:autofillHints="@string/state"
             android:inputType="textPostalAddress"
             android:entries="@array/states"
-            android:text="@{viewModel.state}"
             app:layout_constraintStart_toEndOf="@id/city"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/city"
