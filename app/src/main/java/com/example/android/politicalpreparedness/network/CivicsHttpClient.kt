@@ -9,7 +9,7 @@ class CivicsHttpClient: OkHttpClient() {
 
     companion object {
 
-        const val API_KEY = BuildConfig.ApiKey
+        private const val API_KEY = BuildConfig.ApiKey
 
         fun getClient(): OkHttpClient {
             return Builder()

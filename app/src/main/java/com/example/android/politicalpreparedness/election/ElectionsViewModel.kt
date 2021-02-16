@@ -3,17 +3,13 @@ package com.example.android.politicalpreparedness.election
 import androidx.lifecycle.*
 import com.example.android.politicalpreparedness.database.ElectionDao
 import com.example.android.politicalpreparedness.network.CivicsApi
-import com.example.android.politicalpreparedness.network.CivicsHttpClient
-import com.example.android.politicalpreparedness.network.models.Division
 import com.example.android.politicalpreparedness.network.models.Election
 import com.example.android.politicalpreparedness.network.models.ElectionResponse
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.lang.Exception
-import java.util.*
 
-class ElectionsViewModel(private val dataSource: ElectionDao) : ViewModel() {
+class ElectionsViewModel(dataSource: ElectionDao) : ViewModel() {
 
     private var _upcomingElections = MutableLiveData<List<Election>>()
     val upcomingElections: LiveData<List<Election>>
