@@ -11,7 +11,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin_8">
 
         <ImageView
             android:id="@+id/representative_image"
@@ -32,7 +33,7 @@
             android:layout_marginStart="@dimen/margin_8"
             android:layout_marginTop="@dimen/margin_8"
             android:text="@{representative.office.name}"
-            android:textSize="@dimen/text_18"
+            android:textSize="@dimen/text_16"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/representative_image"
             app:layout_constraintTop_toTopOf="parent"
@@ -43,9 +44,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_8"
-            android:layout_marginTop="@dimen/margin_4"
             android:text="@{representative.official.name}"
-            android:textSize="@dimen/text_16"
+            android:textSize="@dimen/text_14"
             app:layout_constraintStart_toEndOf="@+id/representative_image"
             app:layout_constraintTop_toBottomOf="@+id/office_name"
             tools:text="Joe Biden" />
@@ -54,8 +54,7 @@
             android:id="@+id/representative_party"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_4"
-            android:textSize="@dimen/text_14"
+            android:textSize="@dimen/text_12"
             android:text="@{representative.official.party}"
             app:layout_constraintStart_toStartOf="@+id/representative_name"
             app:layout_constraintTop_toBottomOf="@+id/representative_name"
@@ -66,15 +65,14 @@
             android:layout_width="@dimen/icon_size"
             android:layout_height="@dimen/icon_size"
             android:layout_marginEnd="@dimen/margin_8"
+            android:contentDescription="@string/website_icon"
             android:src="@drawable/ic_www"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/representative_party"
             app:layout_constraintEnd_toStartOf="@+id/image_facebook"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toEndOf="@+id/representative_party"
-            app:layout_constraintTop_toTopOf="@+id/representative_party"
-            android:contentDescription="@string/website_icon"/>
+            app:layout_constraintStart_toEndOf="@+id/representative_party" />
 
         <ImageView
             android:id="@+id/image_twitter"

@@ -11,12 +11,13 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
 import com.example.android.politicalpreparedness.databinding.ViewHolderRepresentativesBinding
 import com.example.android.politicalpreparedness.network.models.Channel
 import com.example.android.politicalpreparedness.representative.model.Representative
 
-class RepresentativeListAdapter(private val representative: Representative, private val clickListener: RepresentativeListener): ListAdapter<Representative, RepresentativeViewHolder>(RepresentativeDiffCallback()){
+class RepresentativeListAdapter: ListAdapter<Representative, RepresentativeViewHolder>(RepresentativeDiffCallback()){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepresentativeViewHolder {
         return RepresentativeViewHolder.from(parent)
@@ -32,6 +33,7 @@ class RepresentativeViewHolder(val binding: ViewHolderRepresentativesBinding): R
 
     fun bind(representative: Representative) {
         binding.representative = representative
+        binding.representativeImage.setImageResource(R.drawable.ic_profile)
         representative.official.channels?.let { showSocialLinks(it) }
         representative.official.urls?.let { showWWWLinks(it) }
 
@@ -86,15 +88,11 @@ class RepresentativeViewHolder(val binding: ViewHolderRepresentativesBinding): R
 
 class RepresentativeDiffCallback: DiffUtil.ItemCallback<Representative>() {
     override fun areItemsTheSame(oldItem: Representative, newItem: Representative): Boolean {
-        return oldItem.office == newItem.office
+        return oldItem.official == newItem.official
     }
 
     override fun areContentsTheSame(oldItem: Representative, newItem: Representative): Boolean {
         return oldItem == newItem
     }
 
-}
-
-class RepresentativeListener(private val clickListener: (representative: Representative) -> Unit) {
-    fun onClick(representative: Representative) = clickListener(representative)
 }
